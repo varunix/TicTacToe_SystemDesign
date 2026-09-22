@@ -29,4 +29,12 @@ public class Board {
 
         return true;
     }
+
+    public int getBoardSize() {
+        return this.size;
+    }
+
+    public Symbol getCell(int row, int column) {
+        return this.cells[row][column];
+    }
 }
