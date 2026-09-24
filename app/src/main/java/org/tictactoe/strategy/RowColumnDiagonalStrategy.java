@@ -11,7 +11,7 @@ public class RowColumnDiagonalStrategy implements WinningStrategy {
         return checkRow(board, move) || checkColumn(board, move) || checkDiagonal(board, move);
     }
 
-    public boolean checkRow(Board board, Move move) {
+    private boolean checkRow(Board board, Move move) {
         int row = move.getRow();
         Symbol symbol = move.getPlayer().getSymbol();
         for(int i=0; i<board.getBoardSize(); i++) {
@@ -23,7 +23,7 @@ public class RowColumnDiagonalStrategy implements WinningStrategy {
         return true;
     }
 
-    public boolean checkColumn(Board board, Move move) {
+    private boolean checkColumn(Board board, Move move) {
         int column = move.getColumn();
         Symbol symbol = move.getPlayer().getSymbol();
         for(int i=0; i<board.getBoardSize(); i++) {
@@ -35,7 +35,7 @@ public class RowColumnDiagonalStrategy implements WinningStrategy {
         return true;
     }
 
-    public boolean checkDiagonal(Board board, Move move) {
+    private boolean checkDiagonal(Board board, Move move) {
         int row = move.getRow();
         int column = move.getColumn();
 
@@ -50,7 +50,7 @@ public class RowColumnDiagonalStrategy implements WinningStrategy {
         return false;
     }
 
-    public boolean checkMainDiagonal(Board board, Move move) {
+    private boolean checkMainDiagonal(Board board, Move move) {
         Symbol symbol = move.getPlayer().getSymbol();
         for(int row=0; row<board.getBoardSize(); row++) {
             int column = row;
@@ -62,7 +62,7 @@ public class RowColumnDiagonalStrategy implements WinningStrategy {
         return true;
     }
 
-    public boolean checkAntiDiagonal(Board board, Move move) {
+    private boolean checkAntiDiagonal(Board board, Move move) {
         Symbol symbol = move.getPlayer().getSymbol();
         for(int row=0; row < board.getBoardSize(); row++) {
             int column = board.getBoardSize()-1-row;
