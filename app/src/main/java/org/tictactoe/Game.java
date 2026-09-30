@@ -29,19 +29,37 @@ public class Game {
     }
 
     public void makeMove(int row, int column) {
-        if(this.gameStatus == GameStatus.IN_PROGRESS) {
-            Move move = new Move(row, column, currentPlayer);
-            this.board.placeMove(move);
-            if(this.winningStrategy.checkWinner(this.board, move)) {
-                this.winner = this.currentPlayer;
-                this.gameStatus = GameStatus.WON;
-            } else if(this.board.isFull()) {
-                this.gameStatus = GameStatus.DRAW;
-            } else {
-                int currentIndex = this.players.indexOf(currentPlayer);
-                int nextIndex = (currentIndex + 1) % players.size();
-                currentPlayer = this.players.get(nextIndex);
-            }
+        if(this.gameStatus != GameStatus.IN_PROGRESS) {
+            throw new IllegalStateException("Game is already over");
         }
+
+        Move move = new Move(row, column, currentPlayer);
+        this.board.placeMove(move);
+        if(this.winningStrategy.checkWinner(this.board, move)) {
+            this.winner = this.currentPlayer;
+            this.gameStatus = GameStatus.WON;
+        } else if(this.board.isFull()) {
+            this.gameStatus = GameStatus.DRAW;
+        } else {
+            switchPlayer();
+        }
+    }
+
+    private void switchPlayer() {
+        int currentIndex = this.players.indexOf(currentPlayer);
+        int nextIndex = (currentIndex + 1) % players.size();
+        currentPlayer = this.players.get(nextIndex);
+    }
+
+    public GameStatus getGameStatus() {
+        return this.gameStatus;
+    }
+
+    public Player getWinner() {
+        return this.winner;
+    }
+
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
     }
 }
