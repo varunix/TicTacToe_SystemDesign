@@ -3,9 +3,37 @@
  */
 package org.tictactoe;
 
+import org.tictactoe.model.Player;
+import org.tictactoe.model.Symbol;
+
+import java.util.Locale;
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) {
         System.out.println("---WELCOME TO TICTACTOE---");
+        Scanner scn = new Scanner(System.in);
+        Symbol selectedSymbol = null;
+        for(int i=1; i<=2; i++) {
+            System.out.println("Enter the name of player : " + i);
+            String name = scn.nextLine();
+            System.out.println("Hello " + name + ", what symbol you want to choose? Here are few options:");
+            System.out.println(Symbol.X);
+            System.out.println(Symbol.O);
+            System.out.println("Type X or O to choose:");
+            Symbol symbol = chooseSymbol(scn, selectedSymbol);
+        }
+    }
 
+    private static Symbol chooseSymbol(Scanner scn, Symbol selectedSymbol) {
+        String symbolInString = scn.nextLine();
+        Symbol symbol = Symbol.valueOf(symbolInString.toUpperCase());
+        while(symbol == selectedSymbol) {
+            System.out.println("Your chosen symbol is already taken, please choose another symbol:");
+            symbolInString = scn.nextLine();
+            symbol = Symbol.valueOf(symbolInString.toUpperCase());
+        }
+
+        return symbol;
     }
 }
