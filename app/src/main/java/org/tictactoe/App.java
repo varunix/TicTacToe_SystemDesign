@@ -16,21 +16,26 @@ public class App {
         Symbol selectedSymbol = null;
         for(int i=1; i<=2; i++) {
             System.out.println("Enter the name of player : " + i);
-            String name = scn.nextLine();
+            String name = scn.nextLine().trim();
             System.out.println("Hello " + name + ", what symbol you want to choose? Here are few options:");
             System.out.println(Symbol.X);
             System.out.println(Symbol.O);
             System.out.println("Type X or O to choose:");
             Symbol symbol = chooseSymbol(scn, selectedSymbol);
+            //TODO: create player objects and store them in a List<Player>
         }
     }
 
     private static Symbol chooseSymbol(Scanner scn, Symbol selectedSymbol) {
-        String symbolInString = scn.nextLine();
+        String symbolInString = scn.nextLine().toUpperCase().trim();
+        while(!(symbolInString.equals("X") || symbolInString.equals("O"))) {
+            System.out.println("Your chosen symbol is not in the given options, please choose another symbol:");
+            symbolInString = scn.nextLine().toUpperCase().trim();
+        }
         Symbol symbol = Symbol.valueOf(symbolInString.toUpperCase());
         while(symbol == selectedSymbol) {
             System.out.println("Your chosen symbol is already taken, please choose another symbol:");
-            symbolInString = scn.nextLine();
+            symbolInString = scn.nextLine().toUpperCase().trim();
             symbol = Symbol.valueOf(symbolInString.toUpperCase());
         }
 
