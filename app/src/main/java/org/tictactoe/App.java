@@ -3,10 +3,14 @@
  */
 package org.tictactoe;
 
+import org.tictactoe.model.Board;
 import org.tictactoe.model.Player;
 import org.tictactoe.model.Symbol;
+import org.tictactoe.strategy.RowColumnDiagonalStrategy;
+import org.tictactoe.strategy.WinningStrategy;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -14,6 +18,7 @@ public class App {
         System.out.println("---WELCOME TO TICTACTOE---");
         Scanner scn = new Scanner(System.in);
         Symbol selectedSymbol = null;
+        List<Player> players = new ArrayList<>();
         for(int i=1; i<=2; i++) {
             System.out.println("Enter the name of player : " + i);
             String name = scn.nextLine().trim();
@@ -22,8 +27,14 @@ public class App {
             System.out.println(Symbol.O);
             System.out.println("Type X or O to choose:");
             Symbol symbol = chooseSymbol(scn, selectedSymbol);
-            //TODO: create player objects and store them in a List<Player>
+            selectedSymbol = symbol;
+            Player player = new Player(name, symbol);
+            players.add(player);
         }
+
+        Board board = new Board(3);
+        WinningStrategy winningStrategy = new RowColumnDiagonalStrategy();
+        Game game = new Game(board, players, winningStrategy);
     }
 
     private static Symbol chooseSymbol(Scanner scn, Symbol selectedSymbol) {
