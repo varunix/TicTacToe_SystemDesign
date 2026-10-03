@@ -4,6 +4,7 @@
 package org.tictactoe;
 
 import org.tictactoe.model.Board;
+import org.tictactoe.model.GameStatus;
 import org.tictactoe.model.Player;
 import org.tictactoe.model.Symbol;
 import org.tictactoe.strategy.RowColumnDiagonalStrategy;
@@ -35,6 +36,24 @@ public class App {
         Board board = new Board(3);
         WinningStrategy winningStrategy = new RowColumnDiagonalStrategy();
         Game game = new Game(board, players, winningStrategy);
+
+        while(game.getGameStatus() == GameStatus.IN_PROGRESS) {
+            Player player = game.getCurrentPlayer();
+            System.out.println("Now it\'s your turn " + player.getName());
+            System.out.println("Select a row from 0 to 2");
+            int row = scn.nextInt();
+            scn.nextLine();
+            System.out.println("Select a column from 0 to 2");
+            int column = scn.nextInt();
+            scn.nextLine();
+            game.makeMove(row, column);
+        }
+
+        if(game.getGameStatus() == GameStatus.WON) {
+            System.out.println("Player: " + game.getWinner().getName() + " WON");
+        } else {
+            System.out.println("The game is DRAW");
+        }
     }
 
     private static Symbol chooseSymbol(Scanner scn, Symbol selectedSymbol) {
