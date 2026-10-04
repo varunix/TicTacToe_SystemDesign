@@ -38,15 +38,24 @@ public class App {
         Game game = new Game(board, players, winningStrategy);
 
         while(game.getGameStatus() == GameStatus.IN_PROGRESS) {
+            boolean moveSuccessful = false;
             Player player = game.getCurrentPlayer();
             System.out.println("Now it\'s your turn " + player.getName());
-            System.out.println("Select a row from 0 to 2");
-            int row = scn.nextInt();
-            scn.nextLine();
-            System.out.println("Select a column from 0 to 2");
-            int column = scn.nextInt();
-            scn.nextLine();
-            game.makeMove(row, column);
+            while(!moveSuccessful) {
+                try {
+                    System.out.println("Select a row from 0 to 2");
+                    int row = scn.nextInt();
+                    scn.nextLine();
+                    System.out.println("Select a column from 0 to 2");
+                    int column = scn.nextInt();
+                    scn.nextLine();
+                    game.makeMove(row, column);
+                    moveSuccessful = true;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("You've chosen an invalid move. Please try again!");
+                    moveSuccessful = false;
+                }
+            }
         }
 
         if(game.getGameStatus() == GameStatus.WON) {
