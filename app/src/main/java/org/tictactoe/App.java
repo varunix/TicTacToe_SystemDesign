@@ -36,7 +36,7 @@ public class App {
         Board board = new Board(3);
         WinningStrategy winningStrategy = new RowColumnDiagonalStrategy();
         Game game = new Game(board, players, winningStrategy);
-
+        printBoard(board);
         while(game.getGameStatus() == GameStatus.IN_PROGRESS) {
             boolean moveSuccessful = false;
             Player player = game.getCurrentPlayer();
@@ -50,10 +50,10 @@ public class App {
                     int column = scn.nextInt();
                     scn.nextLine();
                     game.makeMove(row, column);
+                    printBoard(board);
                     moveSuccessful = true;
                 } catch (IllegalArgumentException e) {
                     System.out.println("You've chosen an invalid move. Please try again!");
-                    moveSuccessful = false;
                 }
             }
         }
@@ -79,5 +79,29 @@ public class App {
         }
 
         return symbol;
+    }
+
+    private static void printBoard(Board board) {
+        int sizeOfBoard = board.getBoardSize();
+        int numOfDash = sizeOfBoard + (sizeOfBoard - 1);
+        for(int i=0; i<sizeOfBoard; i++) {
+            for(int j=0; j<sizeOfBoard; j++) {
+                Symbol cell = board.getCell(i,j);
+                if(cell == Symbol.X) {
+                    System.out.print("X");
+                } else if(cell == Symbol.O) {
+                    System.out.print("O");
+                } else {
+                    System.out.print(" ");
+                }
+                if(j < sizeOfBoard-1) System.out.print("|");
+            }
+            System.out.println();
+            if(i < sizeOfBoard-1) {
+                for(int k=0; k<numOfDash; k++) {
+                    System.out.print("-");
+                }
+            }
+        }
     }
 }
