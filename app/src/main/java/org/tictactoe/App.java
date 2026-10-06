@@ -58,6 +58,7 @@ public class App {
             }
         }
 
+        scn.close();
         if(game.getGameStatus() == GameStatus.WON) {
             System.out.println("Player: " + game.getWinner().getName() + " WON");
         } else {
@@ -66,16 +67,22 @@ public class App {
     }
 
     private static Symbol chooseSymbol(Scanner scn, Symbol selectedSymbol) {
-        String symbolInString = scn.nextLine().toUpperCase().trim();
-        while(!(symbolInString.equals("X") || symbolInString.equals("O"))) {
-            System.out.println("Your chosen symbol is not in the given options, please choose another symbol:");
-            symbolInString = scn.nextLine().toUpperCase().trim();
-        }
-        Symbol symbol = Symbol.valueOf(symbolInString.toUpperCase());
-        while(symbol == selectedSymbol) {
-            System.out.println("Your chosen symbol is already taken, please choose another symbol:");
-            symbolInString = scn.nextLine().toUpperCase().trim();
-            symbol = Symbol.valueOf(symbolInString.toUpperCase());
+        String input = scn.nextLine().toUpperCase().trim();
+        Symbol symbol = null;
+        while(symbol == null) {
+            if(!input.equals("X") && !input.equals("O")) {
+                System.out.println("Your chosen symbol is not in the given options, please choose another symbol:");
+            } else {
+                symbol = Symbol.valueOf(input);
+                if(symbol == selectedSymbol) {
+                    System.out.println("Your chosen symbol is already taken, please choose another symbol:");
+                    symbol = null;
+                }
+            }
+
+            if(symbol == null) {
+                input = scn.nextLine().trim().toUpperCase();
+            }
         }
 
         return symbol;
@@ -101,6 +108,7 @@ public class App {
                 for(int k=0; k<numOfDash; k++) {
                     System.out.print("-");
                 }
+                System.out.println();
             }
         }
     }
